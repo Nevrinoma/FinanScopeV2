@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanScope.Views.MainPage">
+
+    <StackLayout BackgroundColor="Gray" Orientation="Vertical">
+        <Label Text="Total budget:" FontSize="32" FontAttributes="Bold"/>
+        <Label Text="1000€" FontSize="32" FontAttributes="Bold"/>
+        <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
+            <Button Text="Add Income"/>
+            <Button Text="Add Expense"/>
+        </StackLayout>
+    </StackLayout>
+    
+    
+</ContentPage>
