@@ -16,6 +16,8 @@ namespace FinanScope.Services
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Budget>().Wait();
             _database.CreateTableAsync<Expense>().Wait();
+            //_database.DeleteAllAsync<Budget>().Wait();
+            //_database.DeleteAllAsync<Expense>().Wait();
         }
 
         public Task<List<Budget>> GetBudgetsAsync()
@@ -29,6 +31,17 @@ namespace FinanScope.Services
         }
 
         // Do the same for Expenses
+
+        public Task<List<Expense>> GetTransactionsAsync()
+        {
+            return _database.Table<Expense>().ToListAsync();
+        }
+
+        public Task<int> SaveTransactionAsync(Expense expense)
+        {
+            return _database.InsertAsync(expense);
+        }
+
     }
 
 }
