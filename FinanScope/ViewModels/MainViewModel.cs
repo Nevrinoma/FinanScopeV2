@@ -78,6 +78,7 @@ namespace FinanScope.ViewModels
 
 
 
+
         private async void IncreaseBudget()
         {
             await Application.Current.MainPage.Navigation.PushAsync(new AddTransactionPage(this, isExpense: false));
@@ -133,7 +134,7 @@ namespace FinanScope.ViewModels
 
             // Очищаем поля ввода
             TransactionName = string.Empty;
-            TransactionAmount = 0;
+            TransactionAmount = -0;
 
             // Обновляем список транзакций и отображение общей суммы
             OnPropertyChanged(nameof(Transactions));

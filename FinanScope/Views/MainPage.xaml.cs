@@ -2,6 +2,7 @@
 using FinanScope.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -101,19 +102,20 @@ namespace FinanScope.Views
 
         public class DateTimeConverter : IValueConverter
         {
-            public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
             {
                 if (value is DateTime dateTime)
                 {
-                    return dateTime.ToString("dd.MM.yyyy HH:mm");
+                    return dateTime.ToString("dd.MM.yyyy HH:mm", culture);
                 }
                 return string.Empty;
             }
 
-            public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             {
                 throw new NotImplementedException();
             }
         }
+
     }
 }

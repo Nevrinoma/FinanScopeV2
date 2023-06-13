@@ -45,7 +45,7 @@ namespace FinanScope.Views
             {
                 confirmButton.TextColor = Color.Red;
                 amountEntry.TextColor = Color.Red;
-                
+                amountEntry.Text = "-";
                 stackLayout.Children.Add(new Label { Text = "Expense", TextColor = Color.Red });
             }
             else
