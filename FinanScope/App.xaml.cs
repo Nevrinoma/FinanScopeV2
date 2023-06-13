@@ -11,14 +11,13 @@ namespace FinanScope
     public partial class App : Application
     {
 
-        public const string DATABASE_NAME = "finanscope.db";
+
         public App()
         {
             InitializeComponent();
 
-            var databaseService = new DatabaseService(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), DATABASE_NAME));
-            var mainViewModel = new MainViewModel(databaseService);
-            MainPage = new NavigationPage(new MainPage(mainViewModel));
+            
+            MainPage = new TabbedPage1();
         }
 
     }

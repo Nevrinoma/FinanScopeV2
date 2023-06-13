@@ -4,32 +4,5 @@
              x:Class="FinanScope.Views.MainPage"
              x:Name="ThisPage">
 
-    <StackLayout>
-        <Label Text="{Binding TotalAmount, Source={x:Reference ThisPage}}" 
-               FontSize="Large"
-               HorizontalOptions="CenterAndExpand" />
-
-        <Button Text="Add"
-                Command="{Binding IncreaseBudgetCommand, Source={x:Reference ThisPage}}"
-                HorizontalOptions="CenterAndExpand" />
-
-        <Button Text="Subtract"
-                Command="{Binding DecreaseBudgetCommand, Source={x:Reference ThisPage}}"
-                HorizontalOptions="CenterAndExpand" />
-
-        <ListView ItemsSource="{Binding Transactions, Source={x:Reference ThisPage}}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Name}" />
-                            <Label Text="{Binding Amount}" />
-                            <Label Text="{Binding Date}" />
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
-
+   
 </ContentPage>

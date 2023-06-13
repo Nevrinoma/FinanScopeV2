@@ -20,6 +20,7 @@ namespace FinanScope.Views
         {
             ViewModel = viewModel;
             BindingContext = ViewModel;
+            NavigationPage.SetHasNavigationBar(this, false);
 
             var addButton = new Button { Text = "Add" };
             addButton.Clicked += async (s, e) =>
@@ -74,6 +75,10 @@ namespace FinanScope.Views
                     subtractButton
                 }
             };
+        }
+
+        public MainPage()
+        {
         }
 
         public class ColorConverter : IValueConverter
