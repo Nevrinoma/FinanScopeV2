@@ -14,54 +14,36 @@ namespace FinanScope.ViewModels
     {
         private readonly DatabaseService databaseService;
 
-        private string planTitle;
-        public string PlanTitle
+        private string planName;
+        public string PlanName
         {
-            get => planTitle;
+            get => planName;
             set
             {
-                if (planTitle != value)
+                if (planName != value)
                 {
-                    planTitle = value;
-                    OnPropertyChanged(nameof(PlanTitle));
+                    planName = value;
+                    OnPropertyChanged(nameof(PlanName));
                 }
             }
         }
 
-        private decimal planAmount;
-        public decimal PlanAmount
+        private decimal planTotalAmount;
+        public decimal PlanTotalAmount
         {
-            get => planAmount;
+            get => planTotalAmount;
             set
             {
-                if (planAmount != value)
+                if (planTotalAmount != value)
                 {
-                    planAmount = value;
-                    OnPropertyChanged(nameof(PlanAmount));
+                    planTotalAmount = value;
+                    OnPropertyChanged(nameof(PlanTotalAmount));
                 }
             }
         }
 
-        private string planAmountText;
-        public string PlanAmountText
-        {
-            get => PlanAmount.ToString();
-            set
-            {
-                decimal amount;
-                if (Decimal.TryParse(value, out amount))
-                {
-                    PlanAmount = amount;
-                    OnPropertyChanged(nameof(PlanAmountText));
-                }
-                else
-                {
-                    // Показать ошибку пользователю или обработать иначе
-                }
-            }
-        }
-
-
+        
+        
 
         private decimal monthlyAddition;
         public decimal MonthlyAddition
@@ -87,7 +69,7 @@ namespace FinanScope.ViewModels
             this.databaseService = databaseService;
 
             SavePlanCommand = new Command(async () => await SavePlanAsync());
-            GoBackCommand = new Command(GoBack); // Используйте GoBack вместо GoBackAsync
+            GoBackCommand = new Command(GoBack); 
 
             LoadPlans();
         }
@@ -99,15 +81,15 @@ namespace FinanScope.ViewModels
         {
             var plan = new Plan
             {
-                Title = this.PlanTitle,
-                Amount = this.PlanAmount,
+                Name = this.PlanName,
+                TotalAmount = this.PlanTotalAmount,
                 MonthlyAddition = this.MonthlyAddition
             };
 
             await databaseService.SavePlanAsync(plan);
             
-            PlanTitle = string.Empty; // Очищаем значения
-            PlanAmount = 0;
+            PlanName = string.Empty; // Очищаем значения
+            PlanTotalAmount = 0;
             MonthlyAddition = 0;
             LoadPlans(); // Обновите список планов после добавления нового
         }
@@ -129,8 +111,9 @@ namespace FinanScope.ViewModels
 
         public async void LoadPlans()
         {
-            var plans = await databaseService.GetPlansAsync();
             Plans.Clear();
+            var plans = await databaseService.GetPlansAsync();
+            
 
             foreach (var plan in plans)
             {

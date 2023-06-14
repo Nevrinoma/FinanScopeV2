@@ -13,7 +13,7 @@ namespace FinanScope.Views
             BindingContext = ViewModel;
 
             var titleEntry = new Entry();
-            titleEntry.SetBinding(Entry.TextProperty, nameof(ViewModel.PlanTitle));
+            titleEntry.SetBinding(Entry.TextProperty, nameof(ViewModel.PlanName));
 
             var amountEntry = new Entry();
             amountEntry.SetBinding(Entry.TextProperty, nameof(ViewModel.PlanAmountText));

@@ -1,4 +1,5 @@
-﻿using FinanScope.Services;
+﻿using FinanScope.Models;
+using FinanScope.Services;
 using FinanScope.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -24,12 +25,15 @@ namespace FinanScope.Views
             plansList.ItemTemplate = new DataTemplate(() =>
             {
                 var titleLabel = new Label();
-                titleLabel.SetBinding(Label.TextProperty, "Title");
+                titleLabel.TextColor = Color.Black;
+                titleLabel.SetBinding(Label.TextProperty,nameof(Plan.Name));
 
                 var amountLabel = new Label();
-                amountLabel.SetBinding(Label.TextProperty, "PlanAmount");
+                amountLabel.TextColor = Color.Black;
+                amountLabel.SetBinding(Label.TextProperty, nameof(Plan.TotalAmount));
 
                 var monthlyAdditionLabel = new Label();
+                monthlyAdditionLabel.TextColor = Color.Black;
                 monthlyAdditionLabel.SetBinding(Label.TextProperty, "MonthlyAddition");
 
                 return new ViewCell
@@ -58,10 +62,10 @@ namespace FinanScope.Views
             Content = new StackLayout
             {
                 Children =
-            {
+                {
                 plansList,
                 addButton
-            }
+                }
             };
         }
     }
