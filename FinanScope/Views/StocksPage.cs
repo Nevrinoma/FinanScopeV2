@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinanScope.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,12 +13,14 @@ namespace FinanScope.Views
         public StocksPage()
         {
             NavigationPage.SetHasNavigationBar(this, false);
+            //string symbol = stocksAPI.GetStocks("AAPL");
             Content = new StackLayout
             {
                 Children = {
-                    new Label { Text = "Stocks" }
+                  // new Label { Text = "Apple price = " + symbol }
                 }
-            };
+                //Console.WriteLine($"Open {GetStocks("AAPL").Close}");
+        };
         }
     }
 }

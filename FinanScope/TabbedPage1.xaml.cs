@@ -28,7 +28,9 @@ namespace FinanScope
             navigationPage.IconImageSource = "budget.png";
             navigationPage.Title = "Budget";
             //NavigationPage.SetHasNavigationBar(this, false);
-            NavigationPage plansPage = new NavigationPage(new plansPage());
+            var planViewModel = new PlanViewModel(databaseService);
+            NavigationPage plansPage = new NavigationPage(new PlansPage(planViewModel));
+
             plansPage.IconImageSource = "plans.png";
             plansPage.Title = "Plans";
             NavigationPage stocksPage = new NavigationPage(new StocksPage());
