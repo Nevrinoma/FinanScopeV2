@@ -63,7 +63,7 @@ namespace FinanScope.Services
                 result = await _database.InsertAsync(plan);
             }
 
-            System.Diagnostics.Debug.WriteLine($"Saved plan with ID {plan.Id}. Result: {result}");
+            //System.Diagnostics.Debug.WriteLine($"Saved plan with ID {plan.Id}. Result: {result}");
             return result;
         }
 
