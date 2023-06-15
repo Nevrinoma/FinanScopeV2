@@ -45,7 +45,7 @@ namespace FinanScope.Views
             grid.Children.Add(Price, 2, 0);
 
             var stocksList = new ListView();
-            //stocksList.SetBinding(ListView.ItemsSourceProperty, nameof(ViewModel.Stocks));
+            stocksList.SetBinding(ListView.ItemsSourceProperty, nameof(ViewModel.Stocks));
             stocksList.ItemTemplate = new DataTemplate(() =>
             {
                 var nameLabel = new Label();
@@ -56,9 +56,12 @@ namespace FinanScope.Views
                 amountLabel.TextColor = Color.Black;
                 amountLabel.SetBinding(Label.TextProperty, nameof(Stocks.Amount));
 
-                var monthlyAdditionLabel = new Label();
-                monthlyAdditionLabel.TextColor = Color.Black;
-                //monthlyAdditionLabel.SetBinding(Label.TextProperty, nameof(Stocks.MonthlyAddition));
+                string amount1 = nameof(Stocks.Amount);
+                
+
+                var priceLabel = new Label();
+                priceLabel.TextColor = Color.Black;
+                priceLabel.Text = (Convert.ToDecimal(amount1) * stocksAPI.GetStocks("AAPL")).ToString();
 
                 var grid2 = new Grid();
                 grid2.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
@@ -66,7 +69,7 @@ namespace FinanScope.Views
                 grid2.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
                 grid2.Children.Add(nameLabel, 0, 0);
                 grid2.Children.Add(amountLabel, 1, 0);
-                grid2.Children.Add(monthlyAdditionLabel, 2, 0);
+                grid2.Children.Add(priceLabel, 2, 0);
 
                 return new ViewCell
                 {
@@ -95,12 +98,6 @@ namespace FinanScope.Views
                     addButton
                 }
             };
-
-
-
-
-
-
 
             //string symbol = stocksAPI.GetStocks("AAPL");
             

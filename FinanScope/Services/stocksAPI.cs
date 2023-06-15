@@ -10,7 +10,7 @@ namespace FinanScope.Services
 {
     internal class stocksAPI
     {
-        public static string GetStocks(string symbol)
+        public static decimal GetStocks(string symbol)
         {
             string url = $"https://stock-prices2.p.rapidapi.com/api/v1/resources/stock-prices/1d?ticker={symbol}";
 
@@ -32,7 +32,7 @@ namespace FinanScope.Services
                         JObject stock = (JObject)stocksData.First.First;
 
 
-                        string kek = stock["Close"].ToString();
+                        decimal kek = (decimal)stock["Close"];
                         
 
                         return kek;
