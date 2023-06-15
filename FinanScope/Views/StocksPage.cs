@@ -56,8 +56,9 @@ namespace FinanScope.Views
                 amountLabel.TextColor = Color.Black;
                 amountLabel.SetBinding(Label.TextProperty, nameof(Stocks.Amount));
 
+
+
                 string amount1 = nameof(Stocks.Amount);
-                
 
                 var priceLabel = new Label();
                 priceLabel.TextColor = Color.Black;
