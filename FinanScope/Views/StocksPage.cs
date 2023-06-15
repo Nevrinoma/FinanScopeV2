@@ -80,7 +80,7 @@ namespace FinanScope.Views
                 await Navigation.PushAsync(new AddStocksPage(ViewModel));
             };
 
-            // Добавьте следующий код здесь
+            
             Appearing += (sender, e) =>
             {
                 ViewModel.LoadStocks();
