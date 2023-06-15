@@ -13,7 +13,6 @@ namespace FinanScope.Models
         public string Image { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal MonthlyAddition { get; set; }
-        
-    }
 
+    }
 }

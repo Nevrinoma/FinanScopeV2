@@ -1,10 +1,9 @@
 ﻿using FinanScope.Models;
 using FinanScope.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Text;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -15,7 +14,7 @@ namespace FinanScope.ViewModels
         private readonly DatabaseService databaseService;
 
         private string planName;
-        public string PlanName
+        public string Name
         {
             get => planName;
             set
@@ -23,13 +22,12 @@ namespace FinanScope.ViewModels
                 if (planName != value)
                 {
                     planName = value;
-                    OnPropertyChanged(nameof(PlanName));
+                    OnPropertyChanged();
                 }
             }
         }
-
         private decimal planTotalAmount;
-        public decimal PlanTotalAmount
+        public decimal TotalAmount
         {
             get => planTotalAmount;
             set
@@ -37,14 +35,10 @@ namespace FinanScope.ViewModels
                 if (planTotalAmount != value)
                 {
                     planTotalAmount = value;
-                    OnPropertyChanged(nameof(PlanTotalAmount));
+                    OnPropertyChanged();
                 }
             }
         }
-
-        
-        
-
         private decimal monthlyAddition;
         public decimal MonthlyAddition
         {
@@ -54,11 +48,10 @@ namespace FinanScope.ViewModels
                 if (monthlyAddition != value)
                 {
                     monthlyAddition = value;
-                    OnPropertyChanged(nameof(MonthlyAddition));
+                    OnPropertyChanged();
                 }
             }
         }
-
         public ObservableCollection<Plan> Plans { get; } = new ObservableCollection<Plan>();
 
         public Command SavePlanCommand { get; }
@@ -69,66 +62,50 @@ namespace FinanScope.ViewModels
             this.databaseService = databaseService;
 
             SavePlanCommand = new Command(async () => await SavePlanAsync());
-            GoBackCommand = new Command(GoBack); 
+            GoBackCommand = new Command(GoBack);
 
             LoadPlans();
         }
-
-
-
-
         public async Task SavePlanAsync()
         {
             var plan = new Plan
             {
-                Name = this.PlanName,
-                TotalAmount = this.PlanTotalAmount,
+                Name = this.Name,
+                TotalAmount = this.TotalAmount,
                 MonthlyAddition = this.MonthlyAddition
             };
 
-            await databaseService.SavePlanAsync(plan);
-            
-            PlanName = string.Empty; // Очищаем значения
-            PlanTotalAmount = 0;
+            await databaseService.SavePlansAsync(plan);
+
+            Name = string.Empty; // Очищаем значения
+            TotalAmount = 0;
             MonthlyAddition = 0;
             LoadPlans(); // Обновите список планов после добавления нового
         }
-
-
-
-
         private async void SavePlan()
         {
             await SavePlanAsync();
             GoBack();
         }
-
-
         private async void GoBack()
         {
             await Application.Current.MainPage.Navigation.PopAsync();
         }
-
         public async void LoadPlans()
         {
             Plans.Clear();
             var plans = await databaseService.GetPlansAsync();
-            
+
 
             foreach (var plan in plans)
             {
                 Plans.Add(plan);
             }
         }
-
-
         public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
-
 }

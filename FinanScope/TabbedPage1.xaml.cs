@@ -28,12 +28,14 @@ namespace FinanScope
             navigationPage.IconImageSource = "budget.png";
             navigationPage.Title = "Budget";
             //NavigationPage.SetHasNavigationBar(this, false);
+
             var planViewModel = new PlanViewModel(databaseService);
             NavigationPage plansPage = new NavigationPage(new PlansPage(planViewModel));
-
             plansPage.IconImageSource = "plans.png";
             plansPage.Title = "Plans";
-            NavigationPage stocksPage = new NavigationPage(new StocksPage());
+
+            var stockViewModel = new StockViewModel(databaseService);
+            NavigationPage stocksPage = new NavigationPage(new StocksPage(stockViewModel));
             stocksPage.IconImageSource = "stocks.png";
             stocksPage.Title = "Stocks";
             //On<Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
