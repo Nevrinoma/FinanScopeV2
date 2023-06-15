@@ -51,15 +51,15 @@ namespace FinanScope.Views
             {
                 var nameLabel = new Label();
                 nameLabel.TextColor = Color.Black;
-                nameLabel.SetBinding(Label.TextProperty, nameof(Stocks.Name));
+                nameLabel.SetBinding(Label.TextProperty, nameof(StocksObject.Name));
 
                 var amountLabel = new Label();
                 amountLabel.TextColor = Color.Black;
-                amountLabel.SetBinding(Label.TextProperty, nameof(Stocks.Amount));
+                amountLabel.SetBinding(Label.TextProperty, nameof(StocksObject.Amount));
 
                 var priceLabel = new Label();
                 priceLabel.TextColor = Color.Black;
-                priceLabel.SetBinding(Label.TextProperty, new Binding(nameof(Stocks.Amount), converter: new MultiplyConverter()));
+                priceLabel.SetBinding(Label.TextProperty, nameof(StocksObject.Price));
 
 
                 var grid2 = new Grid();
@@ -81,17 +81,13 @@ namespace FinanScope.Views
                 };
             });
 
+
             var addButton = new Button { Text = "Add" };
             addButton.Clicked += async (s, e) =>
             {
                 await Navigation.PushAsync(new AddStocksPage(ViewModel));
             };
 
-
-            Appearing += (sender, e) =>
-            {
-                ViewModel.LoadStocks();
-            };
 
             Content = new StackLayout
             {
@@ -103,32 +99,9 @@ namespace FinanScope.Views
                 }
             };
 
-            //string symbol = stocksAPI.GetStocks("AAPL");
-
-            // new Label { Text = "Apple price = " + symbol }
-
-            //Console.WriteLine($"Open {GetStocks("AAPL").Close}");
-
         }
+
     }
 
-    public class MultiplyConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            decimal amount = (decimal)value;
-            decimal stockPrice = Math.Round(stocksAPI.GetStocks("AAPL"), 2); // suda
-
-            decimal result = amount * stockPrice;
-            return result.ToString("0.00"); 
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-
-
-    }
 
 }

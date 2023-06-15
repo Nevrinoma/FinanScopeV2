@@ -54,7 +54,7 @@ namespace FinanScope.ViewModels
             }
         }
 
-        public ObservableCollection<Stocks> Stocks { get; } = new ObservableCollection<Stocks>();
+        public List<StocksObject> Stocks { get; } = new List<StocksObject>();
         public Command SaveStocksCommand { get; }
         public Command GoBackCommand { get; }
         public StockViewModel(DatabaseService databaseService)
@@ -76,10 +76,10 @@ namespace FinanScope.ViewModels
 
             await databaseService.SaveStocksAsync(stock);
 
-            Name = string.Empty; 
+            Name = string.Empty; // Очищаем значения
             Amount = 0;
             Symbol = string.Empty;
-            LoadStocks(); 
+            LoadStocks(); // Обновите список планов после добавления нового
         }
         private async void SaveStock()
         {
@@ -96,7 +96,13 @@ namespace FinanScope.ViewModels
             var stocks = await databaseService.GetStocksAsync();
             foreach (var stock in stocks)
             {
-                Stocks.Add(stock);
+                StocksObject stocksObject = new StocksObject();
+                stocksObject.Name = stock.Name;
+                stocksObject.Amount = stock.Amount.ToString();
+                decimal stockPrice = Math.Round(stocksAPI.GetStocks(stock.Symbol), 2);
+
+                stocksObject.Price = (stock.Amount * stockPrice).ToString("0.00");
+                Stocks.Add(stocksObject);
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -105,5 +111,13 @@ namespace FinanScope.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+    }
+
+    public class StocksObject
+    {
+        public string Amount { get; set; }
+        public string Name { get; set; }
+        public string Price { get; set; }
     }
 }
