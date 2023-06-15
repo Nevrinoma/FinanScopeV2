@@ -23,7 +23,7 @@ namespace FinanScope.Views
             var monthlyAdditionEntry = new Entry();
             monthlyAdditionEntry.SetBinding(Entry.TextProperty, nameof(ViewModel.MonthlyAddition));
 
-            // TODO: Add image selection logic here
+            
 
             var saveButton = new Button { Text = "Save" };
             saveButton.Clicked += async (s, e) =>
@@ -46,7 +46,7 @@ namespace FinanScope.Views
                     amountEntry,
                     new Label { Text = "Monthly Addition" },
                     monthlyAdditionEntry,
-                    // TODO: Add image selector here
+                    
                     saveButton,
                     cancelButton
                 }

@@ -82,7 +82,7 @@ namespace FinanScope.Views
                 await Navigation.PushAsync(new AddPlanPage(ViewModel));
             };
 
-            // Добавьте следующий код здесь
+            
             Appearing += (sender, e) =>
             {
                 ViewModel.LoadPlans();

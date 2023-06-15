@@ -64,7 +64,7 @@ namespace FinanScope.ViewModels
             var transactions = await databaseService.GetTransactionsAsync();
             Transactions.Clear();
 
-            // Сортировка транзакций по времени добавления в обратном порядке
+            
             var sortedTransactions = transactions.OrderByDescending(t => t.Date);
 
             foreach (var transaction in sortedTransactions)
@@ -72,7 +72,7 @@ namespace FinanScope.ViewModels
                 Transactions.Add(transaction);
             }
 
-            // Обновление общего бюджета (TotalAmount) путем суммирования всех расходов
+            
             TotalAmount = Transactions.Sum(transaction => transaction.Amount);
         }
 
@@ -86,7 +86,7 @@ namespace FinanScope.ViewModels
         }
         private async void AddTransaction()
         {
-            // Создаем новую транзакцию на основе введенных пользователем данных
+            
             var newTransaction = new Expense
             {
                 Name = TransactionName,
@@ -94,20 +94,20 @@ namespace FinanScope.ViewModels
                 Date = DateTime.Now
             };
 
-            // Добавляем новую транзакцию в коллекцию Transactions
+            
             Transactions.Insert(0, newTransaction);
 
-            // Обновляем общую сумму бюджета
+            
             TotalAmount += TransactionAmount;
 
-            // Сохраняем новую транзакцию в базе данных
+            
             await databaseService.SaveTransactionAsync(newTransaction);
 
-            // Очищаем поля ввода
+            
             TransactionName = string.Empty;
             TransactionAmount = 0;
 
-            // Обновляем список транзакций и отображение общей суммы
+            
             OnPropertyChanged(nameof(Transactions));
             OnPropertyChanged(nameof(TotalAmount));
         }
@@ -115,28 +115,28 @@ namespace FinanScope.ViewModels
 
         private async void DecreaseBudget()
         {
-            // Создаем новую транзакцию на основе введенных пользователем данных
+            
             var newTransaction = new Expense
             {
                 Name = TransactionName,
-                Amount = -TransactionAmount, // Устанавливаем отрицательное значение суммы для расхода
+                Amount = -TransactionAmount, 
                 Date = DateTime.Now
             };
 
-            // Добавляем новую транзакцию в коллекцию Transactions
+            
             Transactions.Insert(0, newTransaction);
 
-            // Обновляем общую сумму бюджета
+            
             TotalAmount -= TransactionAmount;
 
-            // Сохраняем новую транзакцию в базе данных
+            
             await databaseService.SaveTransactionAsync(newTransaction);
 
-            // Очищаем поля ввода
+            
             TransactionName = string.Empty;
             TransactionAmount = 0;
 
-            // Обновляем список транзакций и отображение общей суммы
+            
             OnPropertyChanged(nameof(Transactions));
             OnPropertyChanged(nameof(TotalAmount));
         }

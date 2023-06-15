@@ -3,6 +3,7 @@ using FinanScope.Services;
 using FinanScope.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -19,7 +20,7 @@ namespace FinanScope.Views
             ViewModel = viewModel;
             BindingContext = ViewModel;
 
-            var Name= new Label();
+            var Name = new Label();
             Name.TextColor = Color.Black;
             Name.Text = "Name:";
 
@@ -56,18 +57,20 @@ namespace FinanScope.Views
                 amountLabel.TextColor = Color.Black;
                 amountLabel.SetBinding(Label.TextProperty, nameof(Stocks.Amount));
 
-
-
-                string amount1 = nameof(Stocks.Amount);
-
                 var priceLabel = new Label();
                 priceLabel.TextColor = Color.Black;
-                priceLabel.Text = (Convert.ToDecimal(amount1) * stocksAPI.GetStocks("AAPL")).ToString();
+                priceLabel.SetBinding(Label.TextProperty, new Binding(nameof(Stocks.Amount), converter: new MultiplyConverter()));
+
 
                 var grid2 = new Grid();
                 grid2.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
                 grid2.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
                 grid2.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+
+                grid2.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                grid2.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                grid2.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
                 grid2.Children.Add(nameLabel, 0, 0);
                 grid2.Children.Add(amountLabel, 1, 0);
                 grid2.Children.Add(priceLabel, 2, 0);
@@ -84,7 +87,7 @@ namespace FinanScope.Views
                 await Navigation.PushAsync(new AddStocksPage(ViewModel));
             };
 
-            
+
             Appearing += (sender, e) =>
             {
                 ViewModel.LoadStocks();
@@ -101,11 +104,31 @@ namespace FinanScope.Views
             };
 
             //string symbol = stocksAPI.GetStocks("AAPL");
-            
-                  // new Label { Text = "Apple price = " + symbol }
-                
-                //Console.WriteLine($"Open {GetStocks("AAPL").Close}");
-            
+
+            // new Label { Text = "Apple price = " + symbol }
+
+            //Console.WriteLine($"Open {GetStocks("AAPL").Close}");
+
         }
     }
+
+    public class MultiplyConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            decimal amount = (decimal)value;
+            decimal stockPrice = Math.Round(stocksAPI.GetStocks("AAPL"), 2); // suda
+
+            decimal result = amount * stockPrice;
+            return result.ToString("0.00"); 
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+
+    }
+
 }

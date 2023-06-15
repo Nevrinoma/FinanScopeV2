@@ -76,10 +76,10 @@ namespace FinanScope.ViewModels
 
             await databaseService.SaveStocksAsync(stock);
 
-            Name = string.Empty; // Очищаем значения
+            Name = string.Empty; 
             Amount = 0;
             Symbol = string.Empty;
-            LoadStocks(); // Обновите список планов после добавления нового
+            LoadStocks(); 
         }
         private async void SaveStock()
         {

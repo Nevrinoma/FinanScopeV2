@@ -77,10 +77,10 @@ namespace FinanScope.ViewModels
 
             await databaseService.SavePlansAsync(plan);
 
-            Name = string.Empty; // Очищаем значения
+            Name = string.Empty; 
             TotalAmount = 0;
             MonthlyAddition = 0;
-            LoadPlans(); // Обновите список планов после добавления нового
+            LoadPlans(); 
         }
         private async void SavePlan()
         {
